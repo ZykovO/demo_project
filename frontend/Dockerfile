@@ -3,13 +3,13 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Копирование файлов конфигурации
+# Копирование файлов конфигурации (включая package-lock.json)
 COPY package*.json ./
 COPY angular.json ./
 COPY tsconfig*.json ./
 
-# Установка ВСЕХ зависимостей (включая devDependencies)
-RUN npm ci
+# Установка ВСЕХ зависимостей (используем npm install если нет package-lock.json)
+RUN if [ -f package-lock.json ]; then npm ci; else npm install; fi
 
 # Копирование исходного кода
 COPY src/ ./src/
