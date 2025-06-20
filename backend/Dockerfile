@@ -10,8 +10,6 @@ RUN apt-get update && apt-get install -y \
 # Создание рабочей директории
 WORKDIR /app
 
-# Копирование и установка прав для entrypoint.sh в одном слое
-COPY entrypoint.sh .
 
 # Копирование requirements.txt и установка зависимостей
 COPY requirements.txt .
@@ -23,5 +21,8 @@ ENV PYTHONUNBUFFERED=1
 
 # Порт приложения
 EXPOSE 8000
+
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
 
 ENTRYPOINT ["/app/entrypoint.sh"]
