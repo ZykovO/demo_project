@@ -1,9 +1,4 @@
 #!/bin/bash
-chmod +x /app/entrypoint.sh
-# Ensure entrypoint.sh has correct permissions
-if [ ! -x "/app/entrypoint.sh" ]; then
-    chmod +x /app/entrypoint.sh
-fi
 
 # Функция для логирования
 log() {
