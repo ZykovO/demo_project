@@ -252,7 +252,7 @@ parsed_url = urlparse(API_BASE_URL)
 # ALLOWED_HOSTS
 ALLOWED_HOSTS = ["*"]
 
-CORS_ALLOWED_ORIGINS = ["*"]
+CORS_ALLOW_ALL_ORIGINS = True
 CSRF_TRUSTED_ORIGINS= [
     f"{parsed_url.scheme}://{parsed_url.hostname}:{parsed_url.port or (443 if parsed_url.scheme == 'https' else 80) or 80}"
 ]
