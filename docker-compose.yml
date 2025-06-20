@@ -17,7 +17,6 @@ services:
 
   backend:
     build: ./backend
-    # Remove the command override to use the Dockerfile ENTRYPOINT
     volumes:
       - backend_code:/app
       - static_volume:/app/staticfiles
@@ -26,7 +25,7 @@ services:
       - "8000:8000"
     depends_on:
       db:
-        condition: service_healthy  # Wait for DB to be healthy
+        condition: service_healthy
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
@@ -35,8 +34,11 @@ services:
       DB_PORT: 5432
       DEBUG: "1"
       SECRET_KEY: ${SECRET_KEY:-django-insecure-%7%iix%1+$oqjog1-0*6o9o8l1!-@vun2!9u*6u6eh^52de764}
-      ALLOWED_HOSTS: "*"
+      ALLOWED_HOSTS: "${HOST}"
       DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+
+      # Подставляем внешний IP (используется в settings.py Django)
+      API_BASE_URL: http://${HOST}:8000
 
   frontend:
     build: ./frontend
@@ -44,6 +46,9 @@ services:
       - "80:80"
     depends_on:
       - backend
+    environment:
+      # Подставляем внешний IP в Angular
+      NG_API_URL: http://${HOST}:8000
 
 volumes:
   postgres_data:

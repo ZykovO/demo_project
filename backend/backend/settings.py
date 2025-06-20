@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from datetime import timedelta
 from pathlib import Path
 import os
+from urllib.parse import urlparse
+
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,8 +28,6 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-%7%iix%1+$oqjog1-0*
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -222,18 +222,6 @@ PUBLIC_PATHS = [
     '/sitemap.xml',      # Карта сайта
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-    "http://localhost:4200",
-    "http://127.0.0.1:4200",
-    "http://localhost",
-    "http://127.0.0.1",
-    "http://34.123.41.229"
-]
-
-CSRF_TRUSTED_ORIGINS = ['http://localhost:4200',"http://localhost","http://127.0.0.1","http://34.123.41.229"]
-
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
@@ -257,3 +245,17 @@ STATICFILES_DIRS = [
 
 # Для whitenoise
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+API_BASE_URL = os.getenv("API_BASE_URL", "http://localhost:8000")
+parsed_url = urlparse(API_BASE_URL)
+
+# ALLOWED_HOSTS
+ALLOWED_HOSTS = ["*"
+]
+
+CORS_ALLOWED_ORIGINS = [
+    f"{parsed_url.scheme}://{parsed_url.hostname}:{parsed_url.port or (443 if parsed_url.scheme == 'https' else 80) or 80}"
+]
+CSRF_TRUSTED_ORIGINS= [
+    f"{parsed_url.scheme}://{parsed_url.hostname}:{parsed_url.port or (443 if parsed_url.scheme == 'https' else 80) or 80}"
+]
