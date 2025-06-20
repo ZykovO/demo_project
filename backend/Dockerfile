@@ -27,9 +27,6 @@ RUN mkdir -p /app/static /app/staticfiles /app/media && \
 # Копирование исходного кода
 COPY --chown=appuser:appuser . .
 
-# Убеждаемся, что entrypoint.sh имеет правильные права
-RUN chmod 755 /app/entrypoint.sh && chown appuser:appuser /app/entrypoint.sh
-
 # Переключаемся на пользователя
 USER appuser
 
