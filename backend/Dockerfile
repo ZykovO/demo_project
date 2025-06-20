@@ -10,9 +10,8 @@ RUN apt-get update && apt-get install -y \
 # Создание рабочей директории
 WORKDIR /app
 
-# Копирование entrypoint.sh с правильными правами
-COPY entrypoint.sh .
-RUN chmod +x /app/entrypoint.sh
+# Копирование и установка прав для entrypoint.sh в одном слое
+COPY --chmod=755 entrypoint.sh .
 
 # Копирование requirements.txt и установка зависимостей
 COPY requirements.txt .
@@ -28,8 +27,8 @@ RUN mkdir -p /app/static /app/staticfiles /app/media && \
 # Копирование исходного кода
 COPY --chown=appuser:appuser . .
 
-# Убеждаемся, что entrypoint.sh имеет правильные права после копирования
-RUN chmod +x /app/entrypoint.sh && chown appuser:appuser /app/entrypoint.sh
+# Убеждаемся, что entrypoint.sh имеет правильные права
+RUN chmod 755 /app/entrypoint.sh && chown appuser:appuser /app/entrypoint.sh
 
 # Переключаемся на пользователя
 USER appuser
