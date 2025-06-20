@@ -30,6 +30,13 @@ wait_for_db || exit 1
 log "🛠  Применение миграций..."
 python manage.py migrate --noinput
 
+if [ $? -eq 0 ]; then
+    log "✅ Миграции успешно применены"
+else
+    log "❌ Ошибка при применении миграций"
+    exit 1
+fi
+
 # Сбор статических файлов
 log "📦 Сбор статических файлов..."
 python manage.py collectstatic --noinput --clear
@@ -46,7 +53,7 @@ if [ -n "$DJANGO_SUPERUSER_USERNAME" ] && [ -n "$DJANGO_SUPERUSER_EMAIL" ] && [ 
     log "👤 Создание суперпользователя..."
     python manage.py createsuperuser --noinput \
         --username "$DJANGO_SUPERUSER_USERNAME" \
-        --email "$DJANGO_SUPERUSER_EMAIL" || \
+        --email "$DJANGO_SUPERUSER_EMAIL" 2>/dev/null || \
     log "⚠️ Не удалось создать суперпользователя (возможно, уже существует)"
 fi
 
