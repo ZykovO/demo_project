@@ -10,6 +10,10 @@ RUN apt-get update && apt-get install -y \
 # Создание рабочей директории
 WORKDIR /app
 
+# Копирование entrypoint.sh и установка прав
+COPY entrypoint.sh .
+RUN chmod +x /app/entrypoint.sh
+
 # Копирование requirements.txt и установка зависимостей
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
@@ -23,9 +27,6 @@ RUN mkdir -p /app/static /app/staticfiles /app/media && \
 
 # Копирование исходного кода
 COPY --chown=appuser:appuser . .
-
-# Копируем и даём права на запуск entrypoint
-RUN chmod +x /app/entrypoint.sh
 
 # Переключаемся на пользователя
 USER appuser
