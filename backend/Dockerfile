@@ -17,19 +17,6 @@ COPY --chmod=755 entrypoint.sh .
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Создание пользователя для безопасности
-RUN adduser --disabled-password --gecos '' appuser
-
-# Создание директорий для статики и медиа
-RUN mkdir -p /app/static /app/staticfiles /app/media && \
-    chown -R appuser:appuser /app
-
-# Копирование исходного кода
-COPY --chown=appuser:appuser . .
-
-# Переключаемся на пользователя
-USER appuser
-
 # Переменные окружения
 ENV PYTHONPATH=/app
 ENV PYTHONUNBUFFERED=1
