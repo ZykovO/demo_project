@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 
 # Копирование и установка прав для entrypoint.sh в одном слое
-COPY --chmod=755 entrypoint.sh .
+COPY entrypoint.sh .
 
 # Копирование requirements.txt и установка зависимостей
 COPY requirements.txt .
