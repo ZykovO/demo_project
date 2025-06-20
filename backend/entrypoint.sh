@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Ensure entrypoint.sh has correct permissions
+if [ ! -x "/app/entrypoint.sh" ]; then
+    chmod +x /app/entrypoint.sh
+fi
+
 # Функция для логирования
 log() {
     echo "$(date '+%Y-%m-%d %H:%M:%S') - $1"

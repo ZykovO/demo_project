@@ -19,14 +19,13 @@ services:
     build: ./backend
     command: bash -c "python manage.py collectstatic --noinput && daphne backend.asgi:application --port 8000"
     volumes:
-      - ./backend:/app
+      - backend_code:/app
       - static_volume:/app/staticfiles
       - media_volume:/app/media
     ports:
       - "8000:8000"
     depends_on:
-      db:
-        condition: service_healthy
+      - db
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
@@ -49,3 +48,4 @@ volumes:
   postgres_data:
   static_volume:
   media_volume:
+  backend_code:
