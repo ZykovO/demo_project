@@ -36,6 +36,9 @@ services:
       SECRET_KEY: ${SECRET_KEY:-django-insecure-%7%iix%1+$oqjog1-0*6o9o8l1!-@vun2!9u*6u6eh^52de764}
       ALLOWED_HOSTS: "${HOST}"
       DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+      DJANGO_SUPERUSER_USERNAME: ${DJANGO_SUPERUSER_USERNAME}
+      DJANGO_SUPERUSER_EMAIL: ${DJANGO_SUPERUSER_EMAIL}
+      DJANGO_SUPERUSER_PASSWORD: ${DJANGO_SUPERUSER_PASSWORD}
 
       # Подставляем внешний IP (используется в settings.py Django)
       API_BASE_URL: http://${HOST}:8000
