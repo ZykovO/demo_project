@@ -1,0 +1,7 @@
+<!-- image-preview-modal.html -->
+<div class="modal-overlay" *ngIf="imageUrl" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <button class="close-button" (click)="closeModal()">×</button>
+    <img [src]="imageUrl" class="modal-image" alt="Preview">
+  </div>
+</div>

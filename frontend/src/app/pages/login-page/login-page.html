@@ -1,0 +1,29 @@
+<div class="auth-container">
+  <h2>{{ isLoginMode ? 'Вход' : 'Регистрация' }}</h2>
+
+  <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+    <input type="email" formControlName="email" placeholder="Email" />
+    <div *ngIf="authForm.get('email')?.invalid && authForm.get('email')?.touched" class="error-message">
+      <span *ngIf="authForm.get('email')?.errors?.['required']">Email обязателен</span>
+      <span *ngIf="authForm.get('email')?.errors?.['email']">Неверный формат email</span>
+    </div>
+
+    <input type="password" formControlName="password" placeholder="Пароль" />
+    <div *ngIf="authForm.get('password')?.invalid && authForm.get('password')?.touched" class="error-message">
+      <span *ngIf="authForm.get('password')?.errors?.['required']">Пароль обязателен</span>
+    </div>
+
+    @if (!isLoginMode) {
+      <input type="password" formControlName="confirmPassword" placeholder="Подтвердите пароль" />
+      <div *ngIf="authForm.get('confirmPassword')?.touched && authForm.hasError('passwordMismatch')" class="error-message">
+        <span>Пароли не совпадают</span>
+      </div>
+    }
+
+    <button type="submit">{{ isLoginMode ? 'Войти' : 'Зарегистрироваться' }}</button>
+  </form>
+
+  <a (click)="toggleMode()">
+    {{ isLoginMode ? 'Нет аккаунта? Зарегистрируйтесь' : 'Уже есть аккаунт? Войти' }}
+  </a>
+</div>

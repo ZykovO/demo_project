@@ -1,0 +1,189 @@
+/* add-comment.css */
+.add-comment-container {
+  margin-top: 24px;
+  padding: 16px;
+  background: #2d2d2d;
+  border-radius: 8px;
+  border: 1px solid #444;
+}
+
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.form-header h4 {
+  margin: 0;
+  color: #e0e0e0;
+  font-size: 1.1em;
+}
+
+.toolbar {
+  display: flex;
+  gap: 8px;
+}
+
+.toolbar-button {
+  background: #333;
+  border: 1px solid #555;
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+  color: #e0e0e0;
+  transition: all 0.2s ease;
+}
+
+.toolbar-button:hover {
+  background: #444;
+}
+
+.comment-textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 12px;
+  background: #333;
+  border: 1px solid #555;
+  border-radius: 6px;
+  color: #e0e0e0;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.comment-preview {
+  padding: 12px;
+  background: #333;
+  border: 1px solid #555;
+  border-radius: 6px;
+  color: #e0e0e0;
+  min-height: 100px;
+}
+
+.file-upload {
+  margin-top: 8px;
+}
+
+.upload-label {
+  display: inline-block;
+  padding: 8px 12px;
+  background: #333;
+  border: 1px solid #555;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #e0e0e0;
+  transition: all 0.2s ease;
+}
+
+.upload-label:hover {
+  background: #444;
+}
+
+.file-info {
+  margin-top: 8px;
+  padding: 8px;
+  background: #333;
+  border: 1px solid #555;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.remove-file {
+  background: none;
+  border: none;
+  color: #ff6b6b;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 0 4px;
+}
+
+.file-preview {
+  margin-top: 12px;
+}
+
+.image-preview {
+  max-width: 100%;
+  max-height: 240px;
+  border-radius: 6px;
+  border: 1px solid #555;
+}
+
+.text-preview {
+  padding: 12px;
+  background: #333;
+  border: 1px solid #555;
+  border-radius: 6px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.error-message {
+  color: #ff6b6b;
+  font-size: 0.9em;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.preview-button, .submit-button {
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.preview-button {
+  background: #333;
+  border: 1px solid #555;
+  color: #e0e0e0;
+}
+
+.preview-button:hover {
+  background: #444;
+}
+
+.submit-button {
+  background: #1a73e8;
+  border: 1px solid #1a73e8;
+  color: white;
+}
+
+.submit-button:hover:not(:disabled) {
+  background: #1557b0;
+}
+
+.submit-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.auth-message {
+  margin-top: 24px;
+  padding: 16px;
+  background: #2d2d2d;
+  border-radius: 8px;
+  border: 1px solid #444;
+  text-align: center;
+  color: #aaa;
+}
+
+.auth-message a {
+  color: #8ab4f8;
+  text-decoration: none;
+}
+
+.auth-message a:hover {
+  text-decoration: underline;
+}

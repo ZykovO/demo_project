@@ -1,0 +1,11 @@
+<div class="posts-list">
+  @for (post of posts; track post.id) {
+    <app-post-card [post]="post"></app-post-card>
+  }
+
+  @if (!posts.length) {
+    <div class="no-posts-message">
+      Пока нет ни одного поста
+    </div>
+  }
+</div>

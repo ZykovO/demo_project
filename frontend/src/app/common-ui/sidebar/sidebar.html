@@ -1,0 +1,30 @@
+<div class="content">
+  <nav class="nav-menu">
+    @for (item of navItems; track item.path) {
+      @if (shouldShowItem(item)) {
+        <button class="nav-button"
+                [routerLink]="item.path"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }">
+          <span>{{ item.title }}</span>
+        </button>
+      }
+    }
+  </nav>
+</div>
+
+<div class="user-section">
+  @if (me(); as me) {
+    <button class="user-button" (click)="navigateToProfile()">
+      <div class="user-avatar"></div>
+      <span>{{ me.email }}</span>
+    </button>
+    <button class="user-button" (click)="authService.logout()" style="margin-top: 10px;">
+      <span>Вийти</span>
+    </button>
+  } @else {
+    <button class="user-button" (click)="navigateToLogin()">
+      <span>Ввійти</span>
+    </button>
+  }
+</div>

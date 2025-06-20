@@ -1,0 +1,108 @@
+<div class="post-card">
+  <!-- Заголовок поста -->
+  <div class="post-header">
+    <h2 class="post-title">{{ post.title }}</h2>
+    <div class="post-meta">
+      <span class="author">{{ post.author }} ({{ post.author_username }})</span>
+      <span class="date">{{ formatDate(post.created_at) }}</span>
+      <span class="status" [class.published]="post.is_published" [class.draft]="!post.is_published">
+        {{ post.is_published ? 'Опубликовано' : 'Черновик' }}
+      </span>
+    </div>
+  </div>
+
+  <!-- Содержание поста -->
+  <div class="post-content">
+    <p>{{ post.content }}</p>
+  </div>
+
+  <!-- Вложения поста -->
+  <div class="post-attachments" *ngIf="post.attachments?.length">
+    <h4>Вложения:</h4>
+    <div class="attachments-grid">
+      <div *ngFor="let attachment of post.attachments">
+        <!-- Для изображений показываем превью -->
+        @if (attachment.file_type==="image") {
+          <div class="image-preview-container">
+            <img
+              ngSrc="{{attachment.file_url}}"
+              [alt]="'Превью изображения'"
+              class="thumbnail-image"
+              (click)="openImagePreview($event, attachment.file_url)"
+              width="320"
+              height="320"
+              style="width: auto; height: auto; max-width: 100%; max-height: 150px;"
+            >
+          </div>
+        } @else {
+
+        <!-- Для других файлов оставляем как было -->
+        <div class="attachment-item">
+          <a
+            [href]="attachment.image_url"
+            target="_blank"
+            class="attachment-link">
+            Скачать файл
+          </a>
+        </div>
+        }
+
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Информация о комментариях -->
+  <div class="post-stats">
+    <span class="comments-count">
+      💬 Комментариев: {{ post.comments_count }}
+    </span>
+    <span class="updated-date" *ngIf="post.updated_at !== post.created_at">
+      Обновлено: {{ formatDate(post.updated_at) }}
+    </span>
+  </div>
+
+  <!-- Секция комментариев -->
+  <div class="comments-section">
+    <h3>Комментарии</h3>
+
+    <!-- Загрузка комментариев -->
+    <div class="loading-state" *ngIf="isLoadingComments">
+      <p>Загрузка комментариев...</p>
+    </div>
+
+    <!-- Ошибка загрузки -->
+    <div class="error-state" *ngIf="errorMessage">
+      <p class="error-message">{{ errorMessage }}</p>
+      <button class="retry-button" (click)="loadTopLevelComments()">
+        Попробовать снова
+      </button>
+    </div>
+
+    <!-- Комментарии -->
+    <div class="comments-container" *ngIf="isCommentsLoaded && !isLoadingComments">
+      <app-comment-thread
+        [comments]="topLevelComments"
+        [postId]="post.id">
+      </app-comment-thread>
+    </div>
+
+    <!-- Нет комментариев -->
+    <div class="no-comments" *ngIf="isCommentsLoaded && topLevelComments.length === 0">
+      <p>Пока нет комментариев к этому посту</p>
+      <button class="add-comment-button" (click)="showCommentForm = true">
+        Добавить комментарий
+      </button>
+      <app-add-comment
+        *ngIf="showCommentForm"
+        [postId]="post.id"
+        (commentAdded)="onCommentAdded()">
+      </app-add-comment>
+    </div>
+  </div>
+</div>
+
+<app-image-preview-modal
+  [imageUrl]="previewImageUrl"
+  (close)="previewImageUrl = null">
+</app-image-preview-modal>

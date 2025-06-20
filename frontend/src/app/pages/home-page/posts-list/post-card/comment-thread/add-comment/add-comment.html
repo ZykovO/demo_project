@@ -1,0 +1,57 @@
+<div class="add-comment-container" *ngIf="isAuthenticated">
+  <div class="comment-form">
+    <div class="form-header">
+      <h4>{{ parentId ? 'Ответить на комментарий' : 'Добавить комментарий' }}</h4>
+      <div class="toolbar">
+        <button class="toolbar-button" (click)="insertTag('i')" title="Курсив"><i>i</i></button>
+        <button class="toolbar-button" (click)="insertTag('strong')" title="Жирный"><strong>B</strong></button>
+        <button class="toolbar-button" (click)="insertTag('code')" title="Код"><code>code</code></button>
+        <button class="toolbar-button" (click)="insertTag('a')" title="Ссылка">a</button>
+      </div>
+    </div>
+
+    <textarea
+      class="comment-textarea"
+      [(ngModel)]="content"
+      placeholder="Ваш комментарий..."
+      *ngIf="!previewMode"
+    ></textarea>
+
+    <div class="comment-preview" *ngIf="previewMode" [innerHTML]="formatContent(content)"></div>
+
+    <div class="file-upload" *ngIf="!previewMode">
+      <label class="upload-label">
+        <input type="file" (change)="onFileChange($event)" accept="image/*,.txt" hidden>
+        Прикрепить файл (JPG, GIF, PNG, TXT)
+      </label>
+      <div class="file-info" *ngIf="file">
+        {{ file.name }} ({{ file.size | fileSize }})
+        <button class="remove-file" (click)="removeFile()">×</button>
+      </div>
+    </div>
+
+    <div class="file-preview" *ngIf="filePreview && previewMode">
+      <div *ngIf="file?.type?.startsWith('image/')">
+        <img [src]="filePreview" alt="Превью изображения" class="image-preview">
+      </div>
+      <div *ngIf="file?.type === 'text/plain'" class="text-preview">
+        <pre>{{ filePreview }}</pre>
+      </div>
+    </div>
+
+    <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+    <div class="form-actions">
+      <button class="preview-button" (click)="togglePreview()">
+        {{ previewMode ? 'Редактировать' : 'Предпросмотр' }}
+      </button>
+      <button class="submit-button" (click)="submitComment()" [disabled]="!content.trim()">
+        Отправить
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="auth-message" *ngIf="!isAuthenticated">
+  <p>Для добавления комментариев необходимо <a routerLink="/login">войти</a>.</p>
+</div>

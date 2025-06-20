@@ -1,0 +1,31 @@
+.posts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.no-posts-message {
+  text-align: center;
+  padding: 40px;
+  color: #aaa;
+  font-size: 1.2em;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .posts-list {
+    gap: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .posts-list {
+    gap: 10px;
+  }
+
+  .no-posts-message {
+    padding: 20px;
+    font-size: 1em;
+  }
+}

@@ -1,0 +1,129 @@
+<app-image-preview-modal
+  [imageUrl]="previewImageUrl"
+  (close)="previewImageUrl = null">
+</app-image-preview-modal>
+
+<!-- Добавляем кнопку для показа формы комментария -->
+<div class="add-comment-button-container" *ngIf="level === 0 && !parentId">
+  <button class="add-comment-button" (click)="toggleAddCommentForm()">
+    {{ showAddCommentForm ? 'Скрыть форму' : 'Добавить комментарий' }}
+  </button>
+</div>
+
+<!-- Форма добавления комментария -->
+<app-add-comment
+  *ngIf="showAddCommentForm"
+  [postId]="postId"
+  [parentId]="parentId"
+  (commentAdded)="onCommentAdded()">
+</app-add-comment>
+
+<!-- Таблица комментариев -->
+<div class="comments-table-container" *ngIf="paginatedComments.length > 0">
+  <table class="comments-table">
+    <thead *ngIf="level === 0">
+    <tr>
+      <th>Автор</th>
+      <th>Username</th>
+      <th>Содержание</th>
+      <th>Дата</th>
+      <th>Ответы</th>
+      <th>Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container *ngFor="let comment of paginatedComments; trackBy: trackByCommentId">
+      <tr class="comment-row" [class.deleted]="comment.is_deleted">
+        <!-- Автор -->
+        <td class="author-cell">
+          <div class="author-info">
+            <strong>{{ comment.author }}</strong>
+          </div>
+        </td>
+
+        <!-- Username -->
+        <td class="username-cell">
+          <span class="username">{{ comment.author_username }}</span>
+        </td>
+
+        <!-- Содержание -->
+        <td class="content-cell">
+          <div class="comment-content" [class.deleted-content]="comment.is_deleted">
+            <p *ngIf="!comment.is_deleted" [innerHTML]="formatContent(comment.content)"></p>
+            <p *ngIf="comment.is_deleted" class="deleted-message">
+              <em>Комментарий удален</em>
+            </p>
+
+            <!-- Вложения -->
+            <div class="comment-attachments" *ngIf="comment.attachments?.length && !comment.is_deleted">
+              <div *ngFor="let attachment of comment.attachments">
+                <!-- Для изображений показываем превью -->
+                @if (attachment.image_url) {
+                  <div class="image-preview-container">
+                    <img
+                      [src]="attachment.image_url"
+                      [alt]="'Превью изображения'"
+                      class="thumbnail-image"
+                      (click)="openImagePreview(attachment.image_url)">
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+        </td>
+
+        <!-- Дата -->
+        <td class="date-cell">
+          <div class="date-info">
+            <span class="created-date">{{ formatDate(comment.created_at) }}</span>
+            <span *ngIf="comment.updated_at !== comment.created_at" class="updated-date">
+                Изменено: {{ formatDate(comment.updated_at) }}
+              </span>
+          </div>
+        </td>
+
+        <!-- Количество ответов -->
+        <td class="replies-cell">
+            <span class="replies-count" *ngIf="comment.replies_count > 0">
+              💬 {{ comment.replies_count }}
+            </span>
+          <span *ngIf="comment.replies_count === 0" class="no-replies">—</span>
+        </td>
+
+        <!-- Действия -->
+        <td class="actions-cell">
+          <button
+            *ngIf="comment.replies_count > 0"
+            class="toggle-replies-button"
+            [class.expanded]="isExpanded(comment.id)"
+            (click)="toggleReplies(comment)"
+            [disabled]="isLoadingReplies(comment.id)">
+              <span *ngIf="!isLoadingReplies(comment.id)">
+                {{ isExpanded(comment.id) ? 'Скрыть' : 'Показать' }} ответы
+              </span>
+            <span *ngIf="isLoadingReplies(comment.id)">Загрузка...</span>
+          </button>
+          <button class="reply-button" (click)="toggleAddCommentForm(comment.id)">
+            Ответить
+          </button>
+        </td>
+      </tr>
+
+      <!-- Развернутые ответы -->
+      <tr *ngIf="isExpanded(comment.id) && comment.replies?.length">
+        <td colspan="6">
+          <div class="replies-section" [style.margin-left.px]="20 * (level + 1)">
+            <!-- Рекурсивный компонент для отображения ответов -->
+            <app-comment-thread
+              [comments]="comment.replies"
+              [postId]="postId"
+              [level]="level + 1"
+              [parentId]="comment.id">
+            </app-comment-thread>
+          </div>
+        </td>
+      </tr>
+    </ng-container>
+    </tbody>
+  </table>
+</div>

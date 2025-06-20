@@ -1,0 +1,18 @@
+:host {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+app-sidebar {
+  flex: 0 0 250px; /* Фиксированная ширина сайдбара */
+  height: 100vh;
+  overflow-y: auto; /* Добавляем прокрутку, если контент слишком длинный */
+}
+
+.content-wrapper {
+  flex: 1;
+  overflow-y: auto; /* Прокрутка только для основного контента */
+  height: 100vh;
+  padding: 15px;
+}
