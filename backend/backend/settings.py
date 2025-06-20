@@ -229,9 +229,10 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:4200",
     "http://localhost",
     "http://127.0.0.1",
+    "http://34.123.41.229"
 ]
 
-CSRF_TRUSTED_ORIGINS = ['http://localhost:4200',"http://localhost","http://127.0.0.1"]
+CSRF_TRUSTED_ORIGINS = ['http://localhost:4200',"http://localhost","http://127.0.0.1","http://34.123.41.229"]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
