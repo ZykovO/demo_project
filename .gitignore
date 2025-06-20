@@ -1,0 +1,77 @@
+# === Global ===
+*.log
+*.tmp
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+*.bak
+.env
+
+# === Python / Django (inside ./backend) ===
+/backend/__pycache__/
+/backend/**/*.py[cod]
+/backend/*.py[cod]
+/backend/env/
+/backend/venv/
+/backend/.venv/
+/backend/.env
+/backend/.env.*
+/backend/db.sqlite3
+/backend/media/
+/backend/staticfiles/
+/backend/*.sqlite3
+/backend/*.pyc
+
+# Django specific
+/backend/*.log
+/backend/local_settings.py
+/backend/settings/local.py
+/backend/.mypy_cache/
+/backend/.pytest_cache/
+/backend/.coverage
+/backend/htmlcov/
+/backend/.vscode/
+/backend/instance/
+/backend/.DS_Store
+
+# pip
+/backend/poetry.lock
+/backend/Pipfile.lock
+
+# coverage
+/backend/coverage.xml
+/backend/coverage/
+backend/.coveragerc
+
+# === Node / Angular (inside ./frontend) ===
+/frontend/node_modules/
+/frontend/.angular/
+/frontend/.angular-cache/
+/frontend/.env
+/frontend/.env.*
+/frontend/.vscode/
+/frontend/dist/
+/frontend/tmp/
+/frontend/.DS_Store
+/frontend/npm-debug.log
+/frontend/yarn-error.log
+/frontend/package-lock.json
+/frontend/pnpm-lock.yaml
+/frontend/.turbo/
+
+# Angular production build output
+/frontend/.output/
+/frontend/.cache/
+/frontend/.nx/
+
+# === VSCode ===
+.vscode/
+
+# === IDEs ===
+.idea/
+*.iml
+
+# === OS ===
+ehthumbs.db
+Icon?
