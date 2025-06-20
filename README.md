@@ -29,9 +29,26 @@
    ```
    *Заполнить .env файл параметрами*
    ```dotenv
-   POSTGRES_DB=demo_project
-   POSTGRES_USER=psp_admin
-   POSTGRES_PASSWORD=psp
+      POSTGRES_DB=demo_project
+      POSTGRES_USER=psp_admin
+      POSTGRES_PASSWORD=psp
+      
+      # Внешний IP или доменное имя
+      HOST=34.123.41.229
+      
+      
+      DJANGO_SUPERUSER_USERNAME=admin
+      DJANGO_SUPERUSER_EMAIL=admin@admin.ua
+      DJANGO_SUPERUSER_PASSWORD=admin
+   ```
+   *Заменить хост в конфиге ангуляра /frontend/src/app/environments/environment.ts*
+   ```
+   export const environment = {
+      production: false,
+      apiUrl: 'http://34.30.243.182:8000/api/',
+      wsUrl: 'ws://34.30.243.182:8000/ws/notifications/'
+      };
+
    ```
 
 2. **Убедиться, что установлен Docker и Docker Compose.**
@@ -42,20 +59,13 @@
    docker-compose up --build
    ```
 
-4. **Войти в контейнер Django и создать суперпользователя:**
-
-   ```bash
-   docker exec -it backend bash
-   python manage.py createsuperuser
-   ```
-
-5. **Перейти в Django Admin по адресу:**
+4. **Перейти в Django Admin по адресу:**
 
    ```
-   http://localhost:8000/admin/
+   http://host:8000/admin/
    ```
 
-6. **В админ-панели:**
+5. **В админ-панели:**
     - Создать ещё одного обычного пользователя
     - Создать пару постов для тестирования
 
