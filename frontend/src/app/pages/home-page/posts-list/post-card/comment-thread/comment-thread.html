@@ -18,6 +18,26 @@
   (commentAdded)="onCommentAdded()">
 </app-add-comment>
 
+<!-- Добавляем блок управления сортировкой -->
+<div class="sort-controls" *ngIf="level === 0 && comments.length > 0">
+  <h4>Сортировка комментариев</h4>
+  <div class="sort-buttons">
+    <button
+      *ngFor="let option of sortOptions"
+      class="sort-button"
+      [class.active]="currentSortKey === option.key"
+      (click)="onSortChange(option.key)">
+      {{ option.label }}
+      <span>{{ getSortIcon(option.key) }}</span>
+    </button>
+  </div>
+</div>
+
+<!-- Информация о пагинации -->
+<div class="pagination-info" *ngIf="level === 0 && totalComments > pageSize">
+  {{ paginationInfo }}
+</div>
+
 <!-- Таблица комментариев -->
 <div class="comments-table-container" *ngIf="paginatedComments.length > 0">
   <table class="comments-table">
@@ -126,4 +146,36 @@
     </ng-container>
     </tbody>
   </table>
+</div>
+
+<!-- Пагинация -->
+<div class="pagination-controls" *ngIf="level === 0 && totalPages > 1">
+  <button
+    class="page-button"
+    [disabled]="currentPage === 1"
+    (click)="onPageChange(currentPage - 1)">
+    ‹ Назад
+  </button>
+
+  <div class="page-numbers">
+    <button
+      *ngFor="let page of getPaginationPages()"
+      class="page-number"
+      [class.current]="page === currentPage"
+      (click)="onPageChange(page)">
+      {{ page }}
+    </button>
+  </div>
+
+  <button
+    class="page-button"
+    [disabled]="currentPage === totalPages"
+    (click)="onPageChange(currentPage + 1)">
+    Вперед ›
+  </button>
+</div>
+
+<!-- Сообщение если нет комментариев -->
+<div class="no-comments-message" *ngIf="comments.length === 0 && level === 0">
+  <p>Комментариев пока нет. Будьте первым!</p>
 </div>

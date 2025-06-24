@@ -30,7 +30,7 @@ export class Sidebar {
 
   // Список навигационных элементов
   navItems: NavItem[] = [
-    { path: '/', title: 'Головна', requiresAuth: false, exact: true },
+    { path: '/', title: 'Главная', requiresAuth: false, exact: true },
     // { path: '/posts', title: 'Мої записи', requiresAuth: true },
     // { path: '/profile', title: 'Профіль', requiresAuth: true }
   ];
